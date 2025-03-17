@@ -2,7 +2,7 @@
 
 # Technologies:
 - React + TypeScript + Vite
-- Apollo/GraphQL
+- React Query (for REST)
 - Jest, jsdom, React Testing Library
 
 ## React + TypeScript + Vite

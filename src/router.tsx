@@ -1,7 +1,7 @@
-import { lazy, Suspense } from 'react'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { lazy, Suspense } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-const ActivityFeed = lazy(() => import('./pages/ActivityFeed'))
+const ActivityFeed = lazy(() => import('./pages/ActivityFeed'));
 
 export default function AppRouter() {
   return (
@@ -12,5 +12,5 @@ export default function AppRouter() {
         </Routes>
       </Suspense>
     </Router>
-  )
+  );
 }

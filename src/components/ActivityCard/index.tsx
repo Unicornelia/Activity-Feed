@@ -1,8 +1,10 @@
-import { formatDate } from '../../utils';
-import styled from 'styled-components';
 import { FC } from 'react';
-import { Tour } from '../../types.ts';
+import styled from 'styled-components';
 import UserCard from '../UserCard';
+import HorizontalGrid from '../HorizontalGrid';
+import ImageGrid from '../ImageGrid';
+import { Tour, TourData, TourMetric } from '../../types.ts';
+import { calculateSpeed, formatDate, formatTimeInMotion } from '../../utils';
 
 const CardWrapper = styled.div`
   background-color: white;
@@ -33,6 +35,21 @@ const Title = styled.div`
 `;
 
 const ActivityCard: FC<Tour> = (tour) => {
+  const generateTourData = (tour: TourData): TourMetric[] => {
+    return [
+      { icon: '⏱️', metric: `${formatTimeInMotion(tour.time_in_motion)}` },
+      { icon: '⟷', metric: `${tour.distance / 1000}km` },
+      {
+        icon: '⌀',
+        metric: `${calculateSpeed(tour.distance, tour.time_in_motion)}km/h`,
+      },
+      { icon: '↗︎', metric: `${tour.elevation_up} m` },
+      { icon: '↘︎', metric: `${tour.elevation_down} m` },
+    ];
+  };
+
+  const tourItems = generateTourData(tour);
+
   return (
     <CardWrapper>
       <Header>
@@ -46,6 +63,8 @@ const ActivityCard: FC<Tour> = (tour) => {
       <Title>
         <h1>{tour.name}</h1>
       </Title>
+      <HorizontalGrid items={tourItems} />
+      <ImageGrid images={tour.images} />
     </CardWrapper>
   );
 };

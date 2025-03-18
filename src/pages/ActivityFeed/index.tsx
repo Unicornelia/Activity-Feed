@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from 'react';
+import { FC, useEffect, useMemo, useRef } from 'react';
 import styled from 'styled-components';
 import { fetchActivities } from '../../api/fetchActivities.ts';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -78,16 +78,19 @@ const ActivityFeed: FC = () => {
     return () => observer.current?.disconnect();
   }, [hasNextPage, fetchNextPage]);
 
+  const allTours = useMemo(
+    () => data?.pages.flatMap((page) => page.tours) ?? [],
+    [data]
+  );
+
   if (isLoading) return <Message>Loading...</Message>;
   if (error) return <Message>Error fetching activities</Message>;
 
   return (
     <Container>
-      {data?.pages.map((page) =>
-        page.tours.map((tour: Tour, index: number) => (
-          <ActivityCard key={tour.id || index} {...tour} />
-        ))
-      )}
+      {allTours.map((tour: Tour, index: number) => (
+        <ActivityCard key={tour.id || index} {...tour} />
+      ))}
       {hasNextPage && <Loader ref={loadMoreRef}>Loading more...</Loader>}
       {isFetchingNextPage && <Loader>Fetching more activities...</Loader>}
     </Container>

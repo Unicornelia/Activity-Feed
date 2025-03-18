@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import styled from 'styled-components';
 import UserCard from '../UserCard';
 import HorizontalGrid from '../HorizontalGrid';
@@ -68,7 +68,7 @@ const ActivityCard: FC<Tour> = (tour) => {
     ];
   };
 
-  const tourItems = generateTourData(tour);
+  const tourItems = useMemo(() => generateTourData(tour), [tour]);
 
   return (
     <CardWrapper>

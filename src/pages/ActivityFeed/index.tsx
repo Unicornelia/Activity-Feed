@@ -4,21 +4,40 @@ import { fetchActivities } from '../../api/fetchActivities.ts';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import ActivityCard from '../../components/ActivityCard';
 import { Tour } from '../../types.ts';
+import { theme } from '../../styles/theme.ts';
 
 const Container = styled.main`
   display: grid;
-  background-color: #f5f4e9;
-  color: #242424;
+  background-color: ${theme.colors.background};
+  color: ${theme.colors.primary};
   margin: 0 auto;
-  gap: 50px;
+  gap: 40px;
   padding: 30px 50px;
-  overflow-x: hidden;
+  max-width: 1200px;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    padding: 20px;
+    gap: 30px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 15px;
+    gap: 20px;
+  }
 `;
 
 const Loader = styled.div`
   text-align: center;
   padding: 20px;
-  font-size: 18px;
+  font-size: 1rem;
+  font-weight: 500;
+`;
+
+const Message = styled.p`
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 500;
 `;
 
 const ActivityFeed: FC = () => {
@@ -44,9 +63,11 @@ const ActivityFeed: FC = () => {
   useEffect(() => {
     if (!loadMoreRef.current || !hasNextPage) return;
 
+    if (observer.current) observer.current.disconnect();
+
     observer.current = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
+      ([entry]) => {
+        if (entry.isIntersecting) {
           fetchNextPage();
         }
       },
@@ -57,14 +78,14 @@ const ActivityFeed: FC = () => {
     return () => observer.current?.disconnect();
   }, [hasNextPage, fetchNextPage]);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error fetching activities</p>;
+  if (isLoading) return <Message>Loading...</Message>;
+  if (error) return <Message>Error fetching activities</Message>;
 
   return (
     <Container>
       {data?.pages.map((page) =>
         page.tours.map((tour: Tour, index: number) => (
-          <ActivityCard key={index} {...tour} />
+          <ActivityCard key={tour.id || index} {...tour} />
         ))
       )}
       {hasNextPage && <Loader ref={loadMoreRef}>Loading more...</Loader>}

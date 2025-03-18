@@ -13,6 +13,18 @@ const Map = styled.img`
   opacity: 0.9;
   z-index: 10;
   border: 2px solid white;
+
+  @media (max-width: 768px) {
+    width: 120px;
+    bottom: 8px;
+    right: 8px;
+  }
+
+  @media (max-width: 480px) {
+    width: 100px;
+    bottom: 6px;
+    right: 6px;
+  }
 `;
 
 interface MapOverlayProps {

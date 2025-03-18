@@ -1,11 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
+import { theme } from './theme.ts';
 
 const GlobalStyles = createGlobalStyle`
-    :root {
-        --primary-color: #242424;
-        --background-color: #f5f4e9;
-    }
-
     * {
         margin: 0;
         padding: 0;
@@ -13,9 +9,10 @@ const GlobalStyles = createGlobalStyle`
     }
 
     body {
-        font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-        background-color: var(--background-color);
-        color: var(--primary-color);
+        font-family: system-ui, Helvetica, Arial, sans-serif;
+        font-size: ${theme.fontSizes.base};
+        color: ${theme.colors.primary};
+        background-color: ${theme.colors.background};
         line-height: 1.5;
         min-height: 100vh;
         display: grid;
@@ -23,13 +20,44 @@ const GlobalStyles = createGlobalStyle`
         align-items: center;
     }
 
+    h1 {
+        font-size: ${theme.fontSizes['3xl']};
+    }
+
+    h2 {
+        font-size: ${theme.fontSizes['2xl']};
+    }
+
+    h3 {
+        font-size: ${theme.fontSizes.xl};
+    }
+
+    p {
+        font-size: ${theme.fontSizes.base};
+    }
+
     a {
         text-decoration: none;
-        color: inherit;
+        color: ${theme.colors.accent};
     }
 
     button {
         cursor: pointer;
+    }
+
+
+    @media (max-width: 768px) {
+        body {
+            font-size: ${theme.fontSizes.sm};
+        }
+
+        h1 {
+            font-size: ${theme.fontSizes['2xl']};
+        }
+
+        h2 {
+            font-size: ${theme.fontSizes.xl};
+        }
     }
 `;
 

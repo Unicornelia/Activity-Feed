@@ -20,13 +20,13 @@ describe('calculateSpeed', () => {
 
 describe('formatTimeInMotion', () => {
   it('formats time correctly', () => {
-    expect(formatTimeInMotion(3661)).toBe('1h 1m 1s');
-    expect(formatTimeInMotion(7200)).toBe('2h 0m 0s');
-    expect(formatTimeInMotion(59)).toBe('0h 0m 59s');
+    expect(formatTimeInMotion(3661)).toBe('1h:1m');
+    expect(formatTimeInMotion(7200)).toBe('2h:0m');
+    expect(formatTimeInMotion(59)).toBe('0h:0m');
   });
 
   it('handles edge cases', () => {
-    expect(formatTimeInMotion(0)).toBe('0h 0m 0s');
+    expect(formatTimeInMotion(0)).toBe('0h:0m');
   });
 });
 

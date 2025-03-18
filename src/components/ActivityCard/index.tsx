@@ -6,16 +6,21 @@ import ImageGrid from '../ImageGrid';
 import { Tour, TourData, TourMetric } from '../../types.ts';
 import { calculateSpeed, formatDate, formatTimeInMotion } from '../../utils';
 import MapOverlay from '../MapOverlay';
+import { theme } from '../../styles/theme.ts';
 
 const CardWrapper = styled.div`
-  background-color: white;
+  background-color: ${theme.colors.white};
   padding: 30px;
   box-shadow:
     0 6px 12px rgba(0, 0, 0, 0.1),
     0 3px 6px rgba(0, 0, 0, 0.05);
   width: 100%;
   max-width: 1200px;
-  min-width: 280px;
+  min-width: 300px;
+
+  @media (max-width: 768px) {
+    padding: 20px;
+  }
 
   @media (max-width: 480px) {
     padding: 16px;
@@ -30,12 +35,23 @@ const Title = styled.div`
   display: grid;
 
   h1 {
-    font-size: 3rem;
+    font-size: 2.5rem;
+    margin: 8px 0;
+
+    @media (max-width: 768px) {
+      font-size: 2rem;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 1.5rem;
+    }
   }
 `;
+
 const ImageGridWrapper = styled.div`
   position: relative;
   width: 100%;
+  align-items: center;
 `;
 
 const ActivityCard: FC<Tour> = (tour) => {

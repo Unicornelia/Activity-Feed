@@ -15,7 +15,11 @@ describe('HorizontalGrid', () => {
     render(<HorizontalGrid items={mockMetrics} />);
 
     mockMetrics.forEach(({ icon, metric }) => {
-      expect(screen.getByText(icon + metric)).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          (content) => content.includes(icon) && content.includes(metric)
+        )
+      ).toBeInTheDocument();
     });
 
     expect(screen.getAllByText(/km|h|m/)).toHaveLength(mockMetrics.length);

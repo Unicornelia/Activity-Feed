@@ -1,51 +1,47 @@
 import styled from 'styled-components';
 import { Avatar } from '../../types.ts';
 import { FC } from 'react';
+import { theme } from '../../styles/theme.ts';
 
 const Card = styled.div`
-    display: grid;
-    grid-template-columns: 50px auto;
-    align-items: center;
-    gap: 10px;
-    padding: 0 0 10px 0;
-    width: fit-content;
+  display: grid;
+  grid-template-columns: 50px auto;
+  align-items: center;
+  gap: 10px;
+  padding: 0 0 10px 0;
+  width: fit-content;
 
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 30px auto;
     img {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        object-fit: cover;
+      width: 30px;
+      height: 30px;
     }
-
-    @media (max-width: 400px) {
-        grid-template-columns: 40px auto;
-
-        img {
-            width: 40px;
-            height: 40px;
-        }
-
-        span {
-            font-size: 14px;
-        }
+  }
 `;
 
 const Description = styled.div`
   display: grid;
   gap: 5px;
-  color: #333;
+  color: ${theme.colors.primary};
   justify-items: baseline;
 `;
 
 const Name = styled.a`
   cursor: pointer;
-  color: blue;
+  color: ${theme.colors.accent};
 `;
 
 const Datum = styled.span`
-  color: slategray;
-  font-weight: lighter;
-  font-size: 0.9rem;
+  color: ${theme.colors.greyText};
+  font-weight: 400;
 `;
 
 type UserCardProps = {

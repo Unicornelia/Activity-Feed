@@ -32,7 +32,7 @@ const mockTour: Tour = {
     src: '',
     attribution: '',
   },
-  name: 'Mountain Adventure',
+  name: 'My practical adventure\n',
   date: '2024-03-18T12:00:00Z',
   display_name: 'John Doe',
   creator: {
@@ -50,10 +50,10 @@ const mockTour: Tour = {
 };
 
 describe('ActivityCard', () => {
-  it('renders activity name', () => {
+  it('renders activity header', () => {
     render(<ActivityCard {...mockTour} />);
     expect(
-      screen.getByRole('heading', { name: /Mountain Adventure/i })
+      screen.getByRole('heading', { name: /My practical adventure/i })
     ).toBeInTheDocument();
   });
 

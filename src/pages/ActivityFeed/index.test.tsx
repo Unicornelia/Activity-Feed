@@ -1,16 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 import ActivityFeed from '../ActivityFeed';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { Tour } from '../../types';
 
-vi.mock('@tanstack/react-query', async (importOriginal) => {
-  const actual = await importOriginal();
-  return {
-    ...actual,
-    useQuery: vi.fn(),
-  };
-});
+vi.mock('@tanstack/react-query', () => ({
+  useQuery: vi.fn(),
+  useInfiniteQuery: vi.fn(),
+}));
 
 vi.mock('../../components/ActivityCard', () => ({
   __esModule: true,
@@ -22,7 +19,7 @@ vi.mock('../../components/ActivityCard', () => ({
 const mockTours: Tour[] = [
   {
     id: 1,
-    name: 'Hiking Adventure',
+    name: 'My drab adventure',
     date: '2024-03-18T12:00:00Z',
     display_name: 'Alice Johnson',
     creator: {
@@ -47,11 +44,11 @@ const mockTours: Tour[] = [
   },
   {
     id: 2,
-    name: 'Mountain Biking',
+    name: 'My normal adventure',
     date: '2024-03-19T15:00:00Z',
-    display_name: 'Bob Smith',
+    display_name: 'Candace Moen',
     creator: {
-      username: 'bobsmith',
+      username: 'cmoen',
       avatar: { src: 'avatar2.jpg', templated: true },
     },
     distance: 22000,
@@ -77,7 +74,7 @@ const mockTours: Tour[] = [
 
 describe('ActivityFeed', () => {
   it('renders loading state', () => {
-    (useQuery as vi.Mock).mockReturnValue({ isLoading: true });
+    (useInfiniteQuery as vi.Mock).mockReturnValue({ isLoading: true });
 
     render(<ActivityFeed />);
 
@@ -85,7 +82,7 @@ describe('ActivityFeed', () => {
   });
 
   it('renders error state', () => {
-    (useQuery as vi.Mock).mockReturnValue({
+    (useInfiniteQuery as vi.Mock).mockReturnValue({
       isLoading: false,
       error: new Error('Failed to fetch'),
     });
@@ -95,10 +92,10 @@ describe('ActivityFeed', () => {
     expect(screen.getByText(/error fetching activities/i)).toBeInTheDocument();
   });
 
-  it('renders activity cards when data is available', () => {
-    (useQuery as vi.Mock).mockReturnValue({
+  it('renders activity cards aka tours when data is available', () => {
+    (useInfiniteQuery as vi.Mock).mockReturnValue({
       isLoading: false,
-      data: { tours: mockTours },
+      data: { pages: [{ tours: mockTours }] },
     });
 
     render(<ActivityFeed />);
@@ -106,7 +103,7 @@ describe('ActivityFeed', () => {
     expect(screen.getAllByTestId('activity-card')).toHaveLength(
       mockTours.length
     );
-    expect(screen.getByText('Hiking Adventure')).toBeInTheDocument();
-    expect(screen.getByText('Mountain Biking')).toBeInTheDocument();
+    expect(screen.getByText('My drab adventure')).toBeInTheDocument();
+    expect(screen.getByText('My normal adventure')).toBeInTheDocument();
   });
 });

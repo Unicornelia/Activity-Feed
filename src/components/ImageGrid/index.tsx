@@ -1,30 +1,81 @@
 import { FC, Key } from 'react';
 import styled from 'styled-components';
-import ResponsiveImage from '../ResponsiveImage';
 import { Image } from '../../types.ts';
+import ResponsiveImage from '../ResponsiveImage';
 
-const GridContainer = styled.div`
+const GridContainer = styled.div<{ $imagesLength?: number }>`
   display: grid;
-  //grid-template-columns: repeat(auto, minmax(150px, 1fr));
-  grid-template-columns: 2fr 1fr;
+  gap: 6px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   grid-auto-rows: auto;
-  gap: 10px;
-  width: 100%;
   margin: auto;
-
-  @media (max-width: 600px) {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-  }
+  justify-content: center;
+  grid-auto-flow: dense;
+  ${({ $imagesLength }) => {
+    if ($imagesLength === 1) {
+      return `
+        grid-template-areas:
+          'side0';
+      `;
+    }
+    if ($imagesLength === 2) {
+      return `
+        grid-template-areas:
+          'side0 side1';
+      `;
+    }
+    if ($imagesLength === 3) {
+      return `
+        grid-template-areas:
+          'side0 side1'
+          'side0 side2';
+      `;
+    }
+    if ($imagesLength === 4) {
+      return `
+        grid-template-areas:
+          'side0 side1'
+          'side2 side3';
+      `;
+    }
+    if ($imagesLength === 5) {
+      return `
+        grid-template-areas:
+          'side0 side1'
+          'side0 side2'
+          'side3 side4';
+      `;
+    }
+    if ($imagesLength === 6) {
+      return `
+        grid-template-areas:
+          'side0 side1'
+          'side0 side2'
+          'side3 side4'
+          'side5 side4';
+      `;
+    }
+    if ($imagesLength === 7) {
+      return `
+        grid-template-areas:
+          'side0 side1'
+          'side0 side2'
+          'side3 side4'
+          'side5 side6';
+      `;
+    }
+  }}
 `;
 
-const ImageWrapper = styled.div`
+const ImageWrapper = styled.div<{ $imgIndex?: number }>`
+  display: grid;
   border-radius: 2px;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 100%;
   height: auto;
-  object-fit: cover;
+  grid-area: ${({ $imgIndex }) => {
+    return `side${$imgIndex}`;
+  }};
 `;
 
 interface ImageGridProps {
@@ -35,15 +86,11 @@ const ImageGrid: FC<ImageGridProps> = ({ images }) => {
   if (images?.length === 0) return null;
 
   return (
-    <GridContainer>
+    <GridContainer $imagesLength={images?.length}>
       {images?.map(
         (image: { id: Key | null | undefined; src: string }, index: number) => (
-          <ImageWrapper key={image.id}>
-            <ResponsiveImage
-              src={image.src}
-              alt={'img'}
-              isLarge={index % 3 === 0}
-            />
+          <ImageWrapper key={image.id} $imgIndex={index}>
+            <ResponsiveImage src={image.src} alt={'img'} />
           </ImageWrapper>
         )
       )}

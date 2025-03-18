@@ -15,7 +15,6 @@ const CardWrapper = styled.div`
   width: 100%;
   max-width: 1200px;
   min-width: 280px;
-  margin: 0 auto;
 
   @media (max-width: 480px) {
     padding: 16px;
@@ -23,11 +22,11 @@ const CardWrapper = styled.div`
 `;
 
 const Header = styled.header`
-  display: flex;
+  display: grid;
 `;
 
 const Title = styled.div`
-  display: flex;
+  display: grid;
 
   h1 {
     font-size: 3rem;

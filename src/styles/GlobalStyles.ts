@@ -1,4 +1,3 @@
-// src/styles/GlobalStyles.ts
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
@@ -19,7 +18,7 @@ const GlobalStyles = createGlobalStyle`
         color: var(--primary-color);
         line-height: 1.5;
         min-height: 100vh;
-        display: flex;
+        display: grid;
         justify-content: center;
         align-items: center;
     }

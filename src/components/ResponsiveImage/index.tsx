@@ -1,21 +1,19 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 
-const Image = styled.img<{ $isLarge?: boolean }>`
+const Image = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 2px;
-  grid-row: ${({ $isLarge }) => ($isLarge ? 'span 2' : 'auto')};
 `;
 
 interface ResponsiveImageProps {
   src: string;
   alt: string;
-  isLarge?: boolean;
 }
 
-const ResponsiveImage: FC<ResponsiveImageProps> = ({ src, alt, isLarge }) => {
+const ResponsiveImage: FC<ResponsiveImageProps> = ({ src, alt }) => {
   const formatImageUrl = (
     url: string,
     params: Record<string, number>
@@ -26,9 +24,9 @@ const ResponsiveImage: FC<ResponsiveImageProps> = ({ src, alt, isLarge }) => {
     );
   };
 
-  const finalUrl = formatImageUrl(src, { width: 400, height: 300 });
+  const finalUrl = formatImageUrl(src, { width: 400, height: 400 });
 
-  return <Image src={finalUrl} alt={alt} loading="lazy" $isLarge={isLarge} />;
+  return <Image src={finalUrl} alt={alt} loading="lazy" />;
 };
 
 export default ResponsiveImage;

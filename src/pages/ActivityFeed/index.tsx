@@ -6,10 +6,12 @@ import ActivityCard from '../../components/ActivityCard';
 import { Tour } from '../../types.ts';
 
 const Container = styled.main`
-  display: inline-grid;
+  display: grid;
   background-color: #f5f4e9;
   color: #242424;
   margin: 0 auto;
+  gap: 50px;
+  padding: 30px 50px;
   overflow-x: hidden;
 `;
 

@@ -22,7 +22,7 @@ export type VectorMapImage = {
 };
 
 export interface Tour {
-  id: string; //20307720130000
+  id: number; //20307720130000
   name: string; // "My strict adventure"
   status: string; // "public"
   date: string;

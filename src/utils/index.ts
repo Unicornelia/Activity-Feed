@@ -1,6 +1,6 @@
 export const calculateSpeed = (distance: number, time: number): number => {
   if (time <= 0) throw new Error('Time must be greater than zero.');
-  return Math.round((distance / time) * 3.6) / 10;
+  return Math.round((distance / time) * 3.6 * 10) / 10;
 };
 
 export const formatTimeInMotion = (seconds: number): string => {

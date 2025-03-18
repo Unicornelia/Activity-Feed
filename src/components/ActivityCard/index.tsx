@@ -8,7 +8,7 @@ import { calculateSpeed, formatDate, formatTimeInMotion } from '../../utils';
 
 const CardWrapper = styled.div`
   background-color: white;
-  padding: 20px;
+  padding: 30px;
   box-shadow:
     0 6px 12px rgba(0, 0, 0, 0.1),
     0 3px 6px rgba(0, 0, 0, 0.05);

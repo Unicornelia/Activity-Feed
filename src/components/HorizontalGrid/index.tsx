@@ -9,7 +9,7 @@ interface HorizontalGridProps {
 const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-  padding: 15px;
+  padding: 10px;
   margin: 0 auto;
   border-top: 2px solid rgba(0, 0, 0, 0.2);
 

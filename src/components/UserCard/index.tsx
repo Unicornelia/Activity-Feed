@@ -7,7 +7,7 @@ const Card = styled.div`
     grid-template-columns: 50px auto;
     align-items: center;
     gap: 10px;
-    padding: 10px;
+    padding: 0 0 10px 0;
     width: fit-content;
 
     img {

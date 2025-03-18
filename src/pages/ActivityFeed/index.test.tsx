@@ -1,13 +1,16 @@
 import { render, screen } from '@testing-library/react';
-import { vi } from 'vitest';
+import { Mock, vi } from 'vitest';
 import ActivityFeed from '../ActivityFeed';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { Tour } from '../../types';
 
-vi.mock('@tanstack/react-query', () => ({
-  useQuery: vi.fn(),
-  useInfiniteQuery: vi.fn(),
-}));
+vi.mock('@tanstack/react-query', async (importOriginal) => {
+  const actual = (await importOriginal()) as Record<string, unknown>;
+  return {
+    ...actual,
+    useInfiniteQuery: vi.fn(),
+  };
+});
 
 vi.mock('../../components/ActivityCard', () => ({
   __esModule: true,
@@ -74,7 +77,7 @@ const mockTours: Tour[] = [
 
 describe('ActivityFeed', () => {
   it('renders loading state', () => {
-    (useInfiniteQuery as vi.Mock).mockReturnValue({ isLoading: true });
+    (useInfiniteQuery as Mock).mockReturnValue({ isLoading: true });
 
     render(<ActivityFeed />);
 
@@ -82,7 +85,7 @@ describe('ActivityFeed', () => {
   });
 
   it('renders error state', () => {
-    (useInfiniteQuery as vi.Mock).mockReturnValue({
+    (useInfiniteQuery as Mock).mockReturnValue({
       isLoading: false,
       error: new Error('Failed to fetch'),
     });
@@ -93,7 +96,7 @@ describe('ActivityFeed', () => {
   });
 
   it('renders activity cards aka tours when data is available', () => {
-    (useInfiniteQuery as vi.Mock).mockReturnValue({
+    (useInfiniteQuery as Mock).mockReturnValue({
       isLoading: false,
       data: { pages: [{ tours: mockTours }] },
     });

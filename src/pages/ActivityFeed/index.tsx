@@ -34,7 +34,7 @@ const ActivityFeed: FC = () => {
     initialPageParam: 0,
     queryKey: ['tours'],
     queryFn: fetchActivities,
-    getNextPageParam: (lastPage, allPages) => lastPage.nextPage ?? false,
+    getNextPageParam: (lastPage) => lastPage.nextPage ?? false,
     retry: 3,
   });
 

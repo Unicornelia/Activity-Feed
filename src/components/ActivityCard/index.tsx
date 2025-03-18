@@ -5,6 +5,7 @@ import HorizontalGrid from '../HorizontalGrid';
 import ImageGrid from '../ImageGrid';
 import { Tour, TourData, TourMetric } from '../../types.ts';
 import { calculateSpeed, formatDate, formatTimeInMotion } from '../../utils';
+import MapOverlay from '../MapOverlay';
 
 const CardWrapper = styled.div`
   background-color: white;
@@ -31,6 +32,10 @@ const Title = styled.div`
   h1 {
     font-size: 3rem;
   }
+`;
+const ImageGridWrapper = styled.div`
+  position: relative;
+  width: 100%;
 `;
 
 const ActivityCard: FC<Tour> = (tour) => {
@@ -63,7 +68,10 @@ const ActivityCard: FC<Tour> = (tour) => {
         <h1>{tour.name}</h1>
       </Title>
       <HorizontalGrid items={tourItems} />
-      <ImageGrid images={tour.images} />
+      <ImageGridWrapper>
+        <ImageGrid images={tour.images} />
+        <MapOverlay vectorMap={tour.vector_map_image_preview} />
+      </ImageGridWrapper>
     </CardWrapper>
   );
 };
